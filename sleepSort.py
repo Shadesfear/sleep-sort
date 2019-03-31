@@ -30,12 +30,19 @@ def min_max(data):
 
     return results
 
+def scale_between(data, start = 0, end = 10):
+    width = end - start
+    res = [(item - min(data))/(max(data) - min(data)) * width + start for item in data]
+
+    return res
+
 
 def start_sort(data, results):
     threads = []
 
     # normed_data = [float(i)/sum(data) for i in data]
-    normed_data = min_max(data)
+    # normed_data = min_max(data)
+    normed_data = scale_between(data, end = 5)
 
     for index, line in enumerate(normed_data):
         thread = SleeperThread(line, results)
@@ -51,7 +58,7 @@ if __name__ == "__main__":
     import random
 
     items = [2,4,5,2,10,100, 2303, 3040]
-    size_of_array = 100
+    size_of_array = 1000
 
 
     items = [random.randint(1, 100) for i in range(size_of_array)]
